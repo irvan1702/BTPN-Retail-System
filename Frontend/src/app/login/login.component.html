@@ -1,0 +1,23 @@
+<div class="login-container">
+  <h1>Login</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="input-container">
+      <md-input-container>
+        <input mdInput type="text" placeholder="Username" name="username" id="username" formControlName="username">
+        <md-error>This field is required</md-error>
+      </md-input-container>
+    </div>
+    <div class="input-container">
+      <md-input-container>
+        <input mdInput type="password" placeholder="Password" name="password" id="password" formControlName="password">
+        <md-error>This field is required</md-error>
+      </md-input-container>
+    </div>
+    <div *ngIf=invalid class="error-container">
+      <p>Invalid Username / Password!</p>
+    </div>
+    <div class="right-button-container">
+      <button md-raised-button color="accent" type="submit">Login</button>
+    </div>
+  </form>  
+</div>
