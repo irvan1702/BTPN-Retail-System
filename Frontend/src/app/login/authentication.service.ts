@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions} from '@angular/http';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -15,9 +15,11 @@ export class AuthenticationService {
 
     login(username: string, password: string) {
         let credentials = new FormData(document.querySelector("form"));
-
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
         //If authorized, set a session.
-        return this.http.post('/api/account/authorize', credentials).map(response=>{
+        console.log(credentials);
+        return this.http.post('http://localhost:8080/user/authorize', credentials, options).map(response=>{
             localStorage.setItem('currentUser', 'admin');
             return response.json();
         });
