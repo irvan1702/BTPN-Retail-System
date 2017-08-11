@@ -1,0 +1,25 @@
+<h1 md-dialog-title class="form-title">{{ title }}</h1>
+<div md-dialog-content>
+  <p class="notice">*All fields are required</p>
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit(form.value)">
+    <md-input-container class="input-block">
+      <input mdInput placeholder="Item Name" name="name" id="name" formControlName="name">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <md-input-container class="input-block">
+      <input mdInput type="number"  placeholder="Price" name="price" id="price" formControlName="price">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <!-- <md-select placeholder="Category" name="categoryId" id="categoryId" formControlName="category">
+      <md-option *ngFor="let category of categories" [value]="category">
+        {{ category.name }}
+      </md-option>
+    </md-select> -->
+  </form>
+</div>
+<div md-dialog-actions>
+  <div class="button-container">
+    <button md-raised-button color="primary" type="submit">Save</button>
+    <button md-raised-button routerLink="/goods" color="warn" type="button">Back</button>
+  </div>
+</div>

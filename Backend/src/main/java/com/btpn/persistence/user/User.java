@@ -27,8 +27,8 @@ public class User implements Serializable {
 	@Column(name="user_id")
 	private Integer userId;
 	
-	@Column(name="user_name")
-	private String username;
+	//@Column(name="user_name")
+	private String userName;
 	
 	@Column(name="user_type")
 	private String userType;
@@ -44,10 +44,10 @@ public class User implements Serializable {
 	
 	public User() {}
 	
-	public User(Integer userId, String userName, String userType, Date joinDate, String name, String password) {
+	public User(Integer userId, String username, String userType, Date joinDate, String name, String password) {
 		super();
 		this.userId = userId;
-		this.username = userName;
+		this.userName = username;
 		this.userType = userType;
 		this.joinDate = joinDate;
 		this.name = name;
@@ -63,11 +63,11 @@ public class User implements Serializable {
 	}
 
 	public String getUserName() {
-		return username;
+		return userName;
 	}
 
-	public void setUserName(String userName) {
-		this.username = userName;
+	public void setUserName(String username) {
+		this.userName = username;
 	}
 
 	public String getUserType() {
@@ -104,7 +104,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + username + ", userType=" + userType + ", joinDate=" + joinDate
+		return "User [userId=" + userId + ", userName=" + userName + ", userType=" + userType + ", joinDate=" + joinDate
 				+ ", name=" + name + ", password=" + password + "]";
 	}
 	

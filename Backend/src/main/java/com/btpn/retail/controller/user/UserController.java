@@ -26,7 +26,7 @@ public class UserController {
 	
 	@RequestMapping(value = "authorize", method = RequestMethod.POST)
 	@CrossOrigin
-	public ResponseEntity<Boolean> authorizeLogin(@RequestBody UserRequest user) {
+	public ResponseEntity<Boolean> authorizeLogin(@RequestBody User user) {
 		User targetUser = userDaoService.findUserByUsername(user.getUserName());
 
 		if (targetUser != null) {

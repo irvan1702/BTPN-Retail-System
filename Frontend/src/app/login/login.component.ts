@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from './authentication.service'
+import { AuthenticationService } from '../service/authentication.service'
 import { Router } from '@angular/router';
+import { User } from '../model/User';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   invalid: Boolean = false;
+  userName : string;
+  password : string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.logout();
 
     this.form = this.formBuilder.group({
-      username  : this.formBuilder.control('', [Validators.required]),
+      userName  : this.formBuilder.control('', [Validators.required]),
       password  : this.formBuilder.control('', [Validators.required])
     });
   }
@@ -33,10 +36,13 @@ export class LoginComponent implements OnInit {
     this.invalid = false;
     if (this.form.valid)
     {
-      this.authenticationService.login(formValues.userName, formValues.password).subscribe(
+      let userName = formValues.userName;
+      let password = formValues.password;
+      let user = new User(userName,password);
+      this.authenticationService.login(user).subscribe(
         (result) => {
           if (result)
-            this.router.navigate(['home']);
+            this.router.navigate(['/home']);
           else
             this.invalid = true;
         },

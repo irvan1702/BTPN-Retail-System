@@ -3,22 +3,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MdDialogModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { routing } from './app.routing'
+import { AuthenticationService } from './service/authentication.service';
+import { ItemService } from './service/item.service'
+import { ItemFormComponent } from './item-form/item-form.component';
+// import { ItemFormDialog } from './item-list/item-list.component';
+import { ItemListComponent } from './item-list/item-list.component';
 import { HomeComponent } from './home/home.component';
-import { AuthenticationService } from './login/authentication.service';
-import { GoodService } from './home/good.service'
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
-],
+    ItemFormComponent,
+    ItemListComponent,
+    HomeComponent,
+    // ItemFormDialog
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,11 +35,16 @@ import { GoodService } from './home/good.service'
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    MdDialogModule
   ],
   providers: [
     AuthenticationService,
-    GoodService
+    ItemService
+  ],
+  entryComponents: [
+    // ItemFormDialog
+    ItemFormComponent
   ],
   bootstrap: [AppComponent]
 })
