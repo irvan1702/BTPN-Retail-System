@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MdDialogModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
+import { RefreshService } from './refresh.service';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
@@ -40,7 +41,8 @@ import { HomeComponent } from './home/home.component';
   ],
   providers: [
     AuthenticationService,
-    ItemService
+    ItemService,
+    RefreshService
   ],
   entryComponents: [
     // ItemFormDialog

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-
+// import { Http } from '@angular/http';
+import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -15,40 +15,30 @@ export class ItemService {
         });
     }
 
-    getItem(id)
-    {
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('itemById', id);
-        return this.http.get('http://localhost:8080/itemById',{search:params}).map(response => {
+    getItem(id) {
+        // let params = new URLSearchParams();
+        // params.append('itemId?=', 1';
+        return this.http.get('http://localhost:8080/itemById/' + id).map(response => {
             return response.json();
         });
     }
 
-    addItem()
-    {
-        let item; 
-        return this.http.post('http://localhost:8080/itemAdd',item).map(response => {
+    addItem() {
+        let item;
+        return this.http.post('http://localhost:8080/itemAdd', item).map(response => {
             return response.json();
         });
     }
-    modifyGood(itemData)
-    {
-        return this.http.post('/api/item/modify', itemData).map(response => {
+    modifyItem(item) {
+        return this.http.put('http://localhost:8080/itemModify', item).map((response) => {
             return response.json();
         });
     }
 
-    deleteGood(id: number)
-    {
+    deleteGood(id: number) {
         return this.http.delete(`/api/item/${id}`).map(response => {
             return response.json();
         });
     }
 
-    getCategories()
-    {
-        return this.http.get('api/category/all').map(response => {
-            return response.json();
-        });
-    }
 }

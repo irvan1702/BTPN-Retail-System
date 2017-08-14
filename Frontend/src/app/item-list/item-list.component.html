@@ -17,13 +17,13 @@
                     <td>{{item.itemType}}</td>
                     <td>{{item.itemPrice}}</td>
                     <!-- <td *ngFor="let detail of item">{{ detail }}</td> -->
-                    <!-- <td>
-                    <button md-raised-button color="primary" (click)="editClick(item)" class="mini-button"><md-icon>edit</md-icon></button>
+                     <td>
+                    <button md-raised-button color="primary" (click)="editClick(item.itemId)" class="mini-button"><md-icon>edit</md-icon></button>
                     <button md-raised-button color="warn" (click)="deleteClick(item)" class="mini-button"><md-icon>delete</md-icon></button>
-                </td> -->
+                </td> 
                 </tr>
             </tbody>
         </table>
-        <h4 style="text-align: center" *ngIf="items.length === 0">Sorry, No Item Found.</h4>
+        <!-- <h4 style="text-align: center" *ngIf="items.length === 0">Sorry, No Item Found.</h4> -->
     </div>
 </div>

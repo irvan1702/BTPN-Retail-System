@@ -4,6 +4,8 @@ import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router";
 import { MdDialogRef, MdDialog, MdDialogConfig, MdSnackBar } from "@angular/material";
 import { Item } from '../model/Item';
+import { RefreshService } from '../refresh.service';
+import { Subscription } from 'rxjs/Subscription';
 
 // @Component({
 //    selector: 'item-form',
@@ -27,14 +29,11 @@ import { Item } from '../model/Item';
 })
 export class ItemFormComponent implements OnInit {
 
-  categories = [
-    'food',
-    'drink',
-    'groceries'
-  ];
   itemForm: FormGroup;
   selectedItem: Item;
   title;
+  itemId;
+  private subscription: Subscription
 
   constructor(
     private itemService: ItemService,
@@ -42,6 +41,8 @@ export class ItemFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private snackBar: MdSnackBar,
     private router: Router,
+    private dialog : MdDialog,
+    private refreshService: RefreshService,
   ) {
 
     // this.activatedRoute.params.subscribe(param => {
@@ -59,9 +60,24 @@ export class ItemFormComponent implements OnInit {
   ngOnInit() {
     this.itemForm = new FormGroup({
       // name: this.formBuilder.control('', [Validators.required]),
-      name: new FormControl('',Validators.required),
-      price: new FormControl('',Validators.required),
+      itemId: new FormControl('', Validators.required),
+      itemName: new FormControl('', Validators.required),
+      itemPrice: new FormControl('', Validators.required),
+      itemType: new FormControl('', Validators.required)
     });
+
+    this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'editForm') {
+        this.selectedItem = res.value;
+        this.title = "Edit Item"
+        this.itemForm.controls['itemId'].setValue(this.selectedItem.itemId);
+        this.itemForm.controls['itemName'].setValue(this.selectedItem.itemName);
+        this.itemForm.controls['itemPrice'].setValue(this.selectedItem.itemPrice);
+        this.itemForm.controls['itemType'].setValue(this.selectedItem.itemType);
+      }
+
+    })
+
   }
 
   /* onSubmit(data) {
@@ -85,5 +101,19 @@ export class ItemFormComponent implements OnInit {
       }
     });
   } */
-}
 
+  onSubmit(data) {
+    //if (this.itemId != null) {
+      console.log(data);
+      this.itemService.modifyItem(data).subscribe(() => {
+        this.refreshService.notifyOther({ option: 'edit', value: "" });
+        this.dialog.closeAll();
+        //this.snackBar.open(`Successfully Modified ${response.itemName}`, 'OK', {
+          //duration: 1500
+        });
+      //});
+    }
+  
+
+
+}

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdSnackBar, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
 import { Router } from '@angular/router';
 import { ItemService } from '../service/item.service'
 import { Item } from '../model/Item';
 import { ItemFormComponent } from '../item-form/item-form.component';
+import { Subscription } from 'rxjs/Subscription';
+import { RefreshService } from '../refresh.service';
 
 @Component({
   selector: 'item-list',
@@ -16,38 +18,38 @@ export class ItemListComponent implements OnInit {
   title = `Item List`;
   description = `Below you'll find the list of our goods.`;
   headers = ['ID', 'Name', 'Category', 'Price'];
-  items: Item[];
+  items;
+  item;
+  itemId;
+  private subscription: Subscription;
 
   constructor(
     private itemService: ItemService,
     private router: Router,
     private dialog: MdDialog,
     private snackBar: MdSnackBar,
+    private refreshService: RefreshService
   ) { }
 
   ngOnInit() {
-    this.getItems();
-  }
-
-  getItems() {
-    this.items = [];
-    this.itemService.getItems().subscribe(response => {
-      console.log(response);
-      this.items = response;
-      // for (let a = 0; a < response.length; a++)
-      // {
-      //   //const item = response[a];
-
-      //   const detail = [
-      //       this.items[a].itemId,
-      //       this.items[a].itemName,
-      //       this.items[a].itemType,
-      //       this.items[a].itemPrice
-      //   ];
-      //   this.items.push(detail);
-      // }
+    this.itemService.getItems().subscribe(data => {
+      this.items = data;
     });
+
+    this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'refresh') {
+        this.items = res.value;
+      }
+      else if (res.hasOwnProperty('option') && res.option === 'edit') {
+        this.itemService.getItems().subscribe(data => {
+          this.items = data;
+        });
+      }
+
+    })
+
   }
+
 
   addClick() {
     let dialogRef = this.dialog.open(ItemFormComponent);
@@ -57,7 +59,30 @@ export class ItemListComponent implements OnInit {
       // this.deleteTransaction(item[0]);
     });
   }
+
+  editClick(itemId) {
+    let dialogRef = this.dialog.open(ItemFormComponent);
+    this.itemId = itemId;
+    this.itemService.getItem(itemId)
+      .subscribe(data => {
+        this.item = data
+        this.refreshService.notifyOther({ option: "editForm", value: this.item });
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //if (result) {
+        this.itemService.getItems().subscribe(data => {
+          console.log(data);
+          this.items = data;
+        });
+      //}
+
+      // this.deleteTransaction(item[0]);
+    });
+  }
 }
+
+
 
 // @Component({
 //   selector: 'item-form',
