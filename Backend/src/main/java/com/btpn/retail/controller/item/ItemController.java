@@ -36,6 +36,7 @@ public class  ItemController{
 	
 	@RequestMapping(value = "itemAdd", method = RequestMethod.POST)
 	@CrossOrigin
+	@ResponseBody
 	public void addItem(@RequestBody Item item) {
 		itemServiceDAO.insertItem(item);
 	}

@@ -23,15 +23,15 @@ export class ItemService {
         });
     }
 
-    addItem() {
-        let item;
-        return this.http.post('http://localhost:8080/itemAdd', item).map(response => {
-            return response.json();
+    addItem(item) {
+        //console.log(item)
+        return this.http.post('http://localhost:8080/itemAdd', item).map((response) => {
+            return response;
         });
     }
     modifyItem(item) {
         return this.http.put('http://localhost:8080/itemModify', item).map((response) => {
-            return response.json();
+            return response;
         });
     }
 

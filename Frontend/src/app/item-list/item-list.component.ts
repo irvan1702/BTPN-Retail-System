@@ -46,6 +46,12 @@ export class ItemListComponent implements OnInit {
         });
       }
 
+       else if (res.hasOwnProperty('option') && res.option === 'add') {
+        this.itemService.getItems().subscribe(data => {
+          this.items = data;
+        });
+      }
+
     })
 
   }
@@ -53,10 +59,13 @@ export class ItemListComponent implements OnInit {
 
   addClick() {
     let dialogRef = this.dialog.open(ItemFormComponent);
-
+    this.refreshService.notifyOther({ option: "addForm", value:""});
     dialogRef.afterClosed().subscribe(result => {
-      if (result) { }
+      // if (result) { }
       // this.deleteTransaction(item[0]);
+      this.itemService.getItems().subscribe(data => {
+          this.items = data;
+        });
     });
   }
 
@@ -72,7 +81,6 @@ export class ItemListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       //if (result) {
         this.itemService.getItems().subscribe(data => {
-          console.log(data);
           this.items = data;
         });
       //}

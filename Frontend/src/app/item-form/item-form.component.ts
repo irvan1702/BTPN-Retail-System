@@ -41,7 +41,7 @@ export class ItemFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private snackBar: MdSnackBar,
     private router: Router,
-    private dialog : MdDialog,
+    private dialog: MdDialog,
     private refreshService: RefreshService,
   ) {
 
@@ -69,12 +69,17 @@ export class ItemFormComponent implements OnInit {
     this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
       if (res.hasOwnProperty('option') && res.option === 'editForm') {
         this.selectedItem = res.value;
+        this.itemId = this.selectedItem.itemId;
         this.title = "Edit Item"
         this.itemForm.controls['itemId'].setValue(this.selectedItem.itemId);
         this.itemForm.controls['itemName'].setValue(this.selectedItem.itemName);
         this.itemForm.controls['itemPrice'].setValue(this.selectedItem.itemPrice);
         this.itemForm.controls['itemType'].setValue(this.selectedItem.itemType);
       }
+      // if (res.hasOwnProperty('option') && res.option === 'addForm') {
+      //   this.itemId = null;
+      //   this.itemForm.reset();
+      // }
 
     })
 
@@ -103,17 +108,27 @@ export class ItemFormComponent implements OnInit {
   } */
 
   onSubmit(data) {
-    //if (this.itemId != null) {
-      console.log(data);
+    console.log(data);
+    if (this.itemId != null) {
       this.itemService.modifyItem(data).subscribe(() => {
         this.refreshService.notifyOther({ option: 'edit', value: "" });
         this.dialog.closeAll();
         //this.snackBar.open(`Successfully Modified ${response.itemName}`, 'OK', {
-          //duration: 1500
-        });
+        //duration: 1500
+      });
+    }
+
+    else if (this.itemId == null) {
+      console.log(data+"afadfafasdas");
+      this.itemService.addItem(data).subscribe(() => {
+        this.refreshService.notifyOther({ option: 'add', value: "" });
+        this.dialog.closeAll();
+        //this.snackBar.open(`Successfully Modified ${response.itemName}`, 'OK', {
+        //duration: 1500
+      });
       //});
     }
-  
 
 
+  }
 }
