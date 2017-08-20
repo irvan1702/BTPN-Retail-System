@@ -84,3 +84,6 @@ tr:hover
 {
     position: relative;
 }
+.calculationForm{
+    float:right;
+}

@@ -86,6 +86,7 @@ export class ItemListComponent implements OnInit {
       if (result == 'save') {
         this.itemService.getItems().subscribe(data => {
           this.items = data;
+          this.refreshService.notifyOther({ option: "refreshTransactionList", value:this.item });
         });
 
 

@@ -19,9 +19,12 @@ export class TransactionListComponent implements OnInit {
   title = `Transaction List`;
   description = `Below you'll find the list of our transaction.`;
   headers = ['ID','Item Name','Quantity','Transaction Date', 'Total Price', 'Discount', 'Grand Total'];
-  transactions;
+  transactions:Transaction [];
   transaction;
   transactionId;
+  subTotal=0;
+  exchange=0;
+  cash;
   private subscription: Subscription;
 
   constructor(
@@ -97,7 +100,7 @@ export class TransactionListComponent implements OnInit {
       .subscribe(data => {
         this.transaction = data
       });
-      
+
     dialogRef.afterClosed().subscribe(data => {
       if (data == 'delete') {
         this.transactionService.deleteTransaction(transactionId).subscribe(() => {
@@ -107,6 +110,17 @@ export class TransactionListComponent implements OnInit {
         });
       }
     })
+  }
+
+  updateSubtotal(){
+    this.subTotal = 0;
+    this.exchange = 0;
+    for(var i = 0 ; i<this.transactions.length;i++){
+      this.subTotal += this.transactions[i].grandTotal; 
+    }
+    console.log(this.cash);
+    this.exchange = this.cash - this.subTotal;
+    
   }
 }
 
