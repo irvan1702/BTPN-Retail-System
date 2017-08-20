@@ -1,0 +1,31 @@
+<h1 md-dialog-title class="form-title">{{ title }}</h1>
+<div md-dialog-content>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+    <md-input-container class="input-block">
+      <input mdInput placeholder="UserName" name="userName" id="userName" formControlName="userName">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <md-input-container class="input-block">
+      <input mdInput type ="password" placeholder="Password" name="password" id="password" formControlName="password">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <md-input-container class="input-block">
+      <input mdInput placeholder="Name" name="name" id="name" formControlName="name">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <md-input-container class="input-block">
+      <input mdInput placeholder="User Role" name="userType" id="userType" formControlName="userType">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <md-input-container class="input-block">
+      <input mdInput type = "date" placeholder="Join Date" name="joinDate" id="joinDate" formControlName="joinDate">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <div md-dialog-actions>
+      <div class="button-container">
+        <button md-raised-button color="primary" type="submit" (click)="dialogRef.close('save')">Save</button>
+        <button md-raised-button (click)="dialogRef.close('cancel')" color="warn" type="button">Back</button>
+      </div>
+    </div>
+  </form>
+</div>

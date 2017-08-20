@@ -1,0 +1,22 @@
+<h1 md-dialog-title class="form-title">{{ title }}</h1>
+<div md-dialog-content>
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+    <md-select placeholder="Item List" name="item" id="item" (change)="onItemChange($event)" formControlName="item">
+      <md-option *ngFor="let item of items" [value]="item.itemId">{{ item.itemName }}</md-option>
+    </md-select>
+    <md-input-container class="input-block">
+      <input mdInput type="number" placeholder="Quantity" name="quantity" id="quantity" formControlName="quantity">
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <!-- <md-input-container class="input-block">
+      <input mdInput type="number" placeholder="Saldo" name="saldo" id="saldo" formControlName="saldo">
+      <md-error>This field is required</md-error>
+    </md-input-container> -->
+    <div md-dialog-actions>
+      <div class="button-container">
+        <button md-raised-button color="primary" type="submit" (click)="dialogRef.close('save')">Save</button>
+        <button md-raised-button (click)="dialogRef.close('cancel')" color="warn" type="button">Back</button>
+      </div>
+    </div>
+  </form>
+</div>

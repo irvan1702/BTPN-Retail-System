@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { Http } from '@angular/http';
 import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -35,9 +34,9 @@ export class ItemService {
         });
     }
 
-    deleteGood(id: number) {
-        return this.http.delete(`/api/item/${id}`).map(response => {
-            return response.json();
+    deleteItem(id) {
+        return this.http.delete('http://localhost:8080/itemDelete?itemId='+id).map((response) => {
+            return response;
         });
     }
 

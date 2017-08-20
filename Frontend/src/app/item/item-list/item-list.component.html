@@ -19,7 +19,7 @@
                     <!-- <td *ngFor="let detail of item">{{ detail }}</td> -->
                      <td>
                     <button md-raised-button color="primary" (click)="editClick(item.itemId)" class="mini-button"><md-icon>edit</md-icon></button>
-                    <button md-raised-button color="warn" (click)="deleteClick(item)" class="mini-button"><md-icon>delete</md-icon></button>
+                    <button md-raised-button color="warn" (click)="deleteClick(item.itemId)" class="mini-button"><md-icon>delete</md-icon></button>
                 </td> 
                 </tr>
             </tbody>

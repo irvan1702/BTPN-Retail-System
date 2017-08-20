@@ -2,8 +2,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { ItemListComponent } from './item-list/item-list.component';
-import { ItemFormComponent } from './item-form/item-form.component';
+// import { ItemListComponent } from './item-list/item-list.component';
+// import { ItemFormComponent } from './item-form/item-form.component';
 
 
 

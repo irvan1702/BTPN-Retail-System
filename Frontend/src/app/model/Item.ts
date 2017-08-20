@@ -2,13 +2,13 @@ export class Item {
     public itemId: number
     public itemName: string
     public itemType: string
-    public itemPrice: Date
+    public itemPrice: number
     public itemCount: string
 
     constructor(
         itemName: string,
         itemType: string,
-        itemPrice: Date,
+        itemPrice: number,
         itemId?: number,
         itemCount?: string
 

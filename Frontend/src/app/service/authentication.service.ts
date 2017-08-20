@@ -18,8 +18,7 @@ export class AuthenticationService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         //If authorized, set a session.
-        console.log(user.userName);
-        return this.http.post('http://localhost:8080/user/authorize', user, options).map(response=>{
+        return this.http.post('http://localhost:8080/authorize', user, options).map(response=>{
             localStorage.setItem('currentUser', 'admin');
             return response.json();
         });

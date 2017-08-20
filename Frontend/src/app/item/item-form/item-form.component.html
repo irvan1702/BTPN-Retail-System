@@ -15,8 +15,8 @@
     </md-input-container>
     <div md-dialog-actions>
       <div class="button-container">
-        <button md-raised-button color="primary" type="submit">Save</button>
-        <button md-raised-button routerLink="/home" color="warn" type="button">Back</button>
+        <button md-raised-button color="primary" type="submit" (click)="dialogRef.close('save')">Save</button>
+        <button md-raised-button (click)="dialogRef.close('cancel')" color="warn" type="button">Back</button>
       </div>
     </div>
   </form>

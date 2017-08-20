@@ -2,11 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MdSnackBar, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
 import { Router } from '@angular/router';
-import { ItemService } from '../service/item.service'
-import { Item } from '../model/Item';
+import { ItemService } from '../../service/item.service'
+import { Item } from '../../model/Item';
 import { ItemFormComponent } from '../item-form/item-form.component';
+import { DeleteComponent } from '../../delete/delete.component';
 import { Subscription } from 'rxjs/Subscription';
-import { RefreshService } from '../refresh.service';
+import { RefreshService } from '../../refresh.service';
 
 @Component({
   selector: 'item-list',
@@ -46,7 +47,7 @@ export class ItemListComponent implements OnInit {
         });
       }
 
-       else if (res.hasOwnProperty('option') && res.option === 'add') {
+      else if (res.hasOwnProperty('option') && res.option === 'add') {
         this.itemService.getItems().subscribe(data => {
           this.items = data;
         });
@@ -59,13 +60,16 @@ export class ItemListComponent implements OnInit {
 
   addClick() {
     let dialogRef = this.dialog.open(ItemFormComponent);
-    this.refreshService.notifyOther({ option: "addForm", value:""});
+    this.refreshService.notifyOther({ option: "addForm", value: "" });
     dialogRef.afterClosed().subscribe(result => {
       // if (result) { }
       // this.deleteTransaction(item[0]);
-      this.itemService.getItems().subscribe(data => {
+      if (result == 'save') {
+        this.itemService.getItems().subscribe(data => {
           this.items = data;
         });
+      }
+
     });
   }
 
@@ -79,14 +83,33 @@ export class ItemListComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      //if (result) {
+      if (result == 'save') {
         this.itemService.getItems().subscribe(data => {
           this.items = data;
         });
-      //}
 
-      // this.deleteTransaction(item[0]);
+
+      }
     });
+  }
+
+  deleteClick(itemId) {
+    let dialogRef = this.dialog.open(DeleteComponent);
+    this.itemService.getItem(itemId)
+      .subscribe(data => {
+        this.item = data
+      });
+
+    //this.refreshService.notifyOther({ option: "showName", value: this.item.itemName });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data == 'delete') {
+        this.itemService.deleteItem(itemId).subscribe(() => {
+          this.itemService.getItems().subscribe(res => {
+            this.items = res;
+          });
+        });
+      }
+    })
   }
 }
 

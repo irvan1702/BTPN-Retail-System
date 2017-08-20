@@ -1,0 +1,29 @@
+<div class="list-container">
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
+    <div class="button-container">
+        <button md-fab (click)="addClick()"><md-icon>add</md-icon></button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <td *ngFor="let header of headers">{{ header }}</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.userId}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.userType}}</td>
+                    <td>{{user.joinDate | date :'dd/MM/yyyy'}}</td>
+                    <!-- <td *ngFor="let detail of item">{{ detail }}</td> -->
+                     <td>
+                    <button md-raised-button color="primary" (click)="editClick(user.userId)" class="mini-button"><md-icon>edit</md-icon></button>
+                    <button md-raised-button color="warn" (click)="deleteClick(user.userId)" class="mini-button"><md-icon>delete</md-icon></button>
+                </td> 
+                </tr>
+            </tbody>
+        </table>
+        <!-- <h4 style="text-align: center" *ngIf="items.length === 0">Sorry, No Item Found.</h4> -->
+    </div>
+</div>
